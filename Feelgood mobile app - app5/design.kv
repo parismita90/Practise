@@ -1,0 +1,132 @@
+<LoginScreen>:
+    GridLayout:
+        cols: 1
+        padding: 15, 15
+        spacing: 20,20
+        GridLayout:
+            cols: 1
+            Label:
+                text: "User Login"
+                font_size: "20sp"
+            TextInput:
+                id: username
+                hint_text: "Username"
+            TextInput:
+                id: password
+                hint_text: "Password"
+                password: True
+            RelativeLayout:
+                Button:
+                    text: "Login"
+                    on_press: root.login(root.ids.username.text,root.ids.password.text)
+                    size_hint: 0.3, 0.3
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6 }
+            Label:
+                id: wrong_details
+                text: ""
+        GridLayout:        
+            cols: 2
+            size_hint: 0.3, 0.5
+            spacing: 10, 0
+            padding: 10, 10
+            Button:
+                text: "Forgot password?"
+                on_press: root.forgot_passwrd()
+                background_color: 1,1,1,0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1,1 
+            Button:
+                text: "Sign up"
+                on_press: root.sign_up()
+                background_color: 1,1,1,0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 0.1, 0.7, 1,1
+
+<ForgotPassword>:
+    GridLayout:  
+        cols: 1  
+        GridLayout:
+            cols: 1
+            Label:
+                text: "Enter your username"
+            TextInput:
+                id: user
+                hint_text: "Your username"
+            Label:
+                id: passw
+                text: ""    
+        GridLayout:
+            cols: 2
+            Button:
+                text: "Retreive password"
+                on_press: root.retrieve_password(root.ids.user.text)
+            Button:
+                text: "Go back to login page"
+                on_press: root.main_page()
+<SignUpScreen>:
+    GridLayout:
+        cols: 1
+        padding: 10, 10
+        spacing: 10, 0
+        Label:
+            text: "Welcome New User! Hope you have fun"
+        TextInput:
+            id: username
+            hint_text: "New username"
+        TextInput:
+            id: password
+            hint_text: "New password"
+        Button:
+            text: "Sign Up"
+            background_color: 1,1,1,0
+            opacity: 1 if self.state == 'normal' else 0.5
+            color: 0.1, 0.7, 1,1             
+            on_press: root.add_user(root.ids.username.text,root.ids.password.text)    
+
+<SignUpSuccess>:
+    GridLayout:
+        cols: 1
+        Label:
+            text: "Login Successful!"
+        Button:
+            text: "Login page"
+            on_press: root.login_page()
+
+<LoginSuccess>:
+    GridLayout:
+        cols: 1
+        RelativeLayout:
+            ImageButton:
+                text: "Logout"
+                on_press: root.log_out()
+                source: "logout_hover.png" if self.hovered else "logout_nothover.png"
+                size_hint: 0.35, 0.35
+                pos_hint: {"center_x":0.90, "center_y":0.80}
+        Label:
+            text: "How are you feeling today?"
+        TextInput:
+            id: feeling
+            hint_text: "happy, sad, unloved...."
+        Button:
+            text: "Enlighten Me"
+            on_press: root.get_quote(root.ids.feeling.text)
+        ScrollView:    
+            Label:
+                id: quote
+                text: ""
+    #           text_size: self.width, self.height
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+
+<RootWidget>:
+    LoginScreen:
+        name: "login_screen"
+    SignUpScreen:
+        name: "sign_up_screen"
+    SignUpSuccess:
+        name: "sign_up_success"
+    LoginSuccess:
+        name: "login_success"
+    ForgotPassword:
+        name: "forgot_password"
